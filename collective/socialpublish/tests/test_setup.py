@@ -19,10 +19,17 @@ class TestInstall(base.BaseTestCase):
         qi.installProduct('collective.socialpublish')
         self.failUnless(qi.isProductInstalled('collective.socialpublish'))
 
+class TestControlpanel(base.BaseTestCase):
+    """ """
+    def afterSetUp(self):
+        pass
 
+    def test_setting_controlpanel(self):
+        pass
 
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
     suite.addTest(makeSuite(TestInstall))
+    suite.addTest(makeSuite(TestControlpanel))
     return suite
