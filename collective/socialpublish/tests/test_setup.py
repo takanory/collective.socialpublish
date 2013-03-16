@@ -53,17 +53,12 @@ class TestControlpanel(base.BaseTestCase):
         self.failUnless('socialpublish_settings' in [a.getAction(self)['id']
                                       for a in self.controlpanel.listActions()])
 
-    # def test_record_key(self):
-    #     record_akismet_key = self.registry.records[
-    #         'collective.akismet.interfaces.IAkismetSettings.akismet_key']
-    #     self.failUnless('akismet_key' in IAkismetSettings)
-    #     self.assertEquals(record_akismet_key.value, u"")
-    #
-    # def test_record_key_site(self):
-    #     record_akismet_key_site = self.registry.records[
-    #         'collective.akismet.interfaces.IAkismetSettings.akismet_key_site']
-    #     self.failUnless('akismet_key_site' in IAkismetSettings)
-    #     self.assertEquals(record_akismet_key_site.value, u"")
+    def test_record_content_types(self):
+        record_content_types = self.registry.records[
+            'collective.socialpublish.controlpanel.interfaces.ISocialPublishControlPanel.content_types']
+        self.failUnless('content_types' in ISocialPublishControlPanel)
+        self.assertEquals(record_content_types.value, u"")
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
