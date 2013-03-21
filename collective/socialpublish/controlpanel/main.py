@@ -14,6 +14,12 @@ class SocialPublishEditForm(controlpanel.RegistryEditForm):
     schema = ISocialPublishControlPanel
     label = _(u"SocialPublish settings")
 
+    def updateFields(self):
+        super(SocialPublishEditForm, self).updateFields()
+
+    def updateWidgets(self):
+        super(SocialPublishEditForm, self).updateWidgets()
+
 
 class SocialPublishControlPanel(controlpanel.ControlPanelFormWrapper):
     form = SocialPublishEditForm

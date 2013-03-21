@@ -57,7 +57,7 @@ class TestControlpanel(base.BaseTestCase):
         record_content_types = self.registry.records[
             'collective.socialpublish.controlpanel.interfaces.ISocialPublishControlPanel.content_types']
         self.failUnless('content_types' in ISocialPublishControlPanel)
-        self.assertEquals(record_content_types.value, u"")
+        self.assertEquals(record_content_types.value, set())
 
 
 def test_suite():

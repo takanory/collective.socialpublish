@@ -26,6 +26,8 @@ setup(name='collective.socialpublish',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
+          'five.grok',
+          'plone.directives.form',
       ],
       entry_points="""
       # -*- Entry points: -*-
