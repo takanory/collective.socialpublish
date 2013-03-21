@@ -27,7 +27,6 @@ def selectable_types(context):
     def _key(v):
         return v['title']
     types.sort(key=_key)
-    return types
     return SimpleVocabulary(types)
 
 def types1(context):
@@ -44,7 +43,14 @@ myVocabulary = SimpleVocabulary.fromItems((
 class ISocialPublishControlPanel(Interface):
     """Social Publish setting interface
     """
-    voca = selectable_types
+    # voca = selectable_types
+
+    # profession = schema.Choice(source=selectable_types,
+    #                            required=False,
+    #                            title=_(u'content types'),
+    #                            description=_(u'Select content types',
+    #                                          default=u'Select content type'),
+    # )
 
     content_types = schema.Set(
         required=False,
