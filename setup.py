@@ -28,6 +28,8 @@ setup(name='collective.socialpublish',
           # -*- Extra requirements: -*-
           'five.grok',
           'plone.directives.form',
+          'tweepy',
+          'facebook-sdk',
       ],
       entry_points="""
       # -*- Entry points: -*-
