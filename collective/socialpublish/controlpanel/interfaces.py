@@ -20,7 +20,7 @@ class ISocialPublishControlPanel(Interface):
         value_type=schema.Choice(vocabulary="plone.app.vocabularies.ReallyUserFriendlyTypes"),
         )
 
-    workflow_transactions = schema.Set(
+    workflow_transitions = schema.Set(
         required=False,
         title=_(u'workflow transitions'),
         description=_(u'Select workflow transitions',
