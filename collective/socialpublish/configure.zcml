@@ -26,4 +26,11 @@
             provides="Products.GenericSetup.interfaces.EXTENSION"
             />
 
+
+    <subscriber
+        for="*
+            Products.DCWorkflow.interfaces.IAfterTransitionEvent"
+        handler=".events.social_publish"
+        />
+
 </configure>
