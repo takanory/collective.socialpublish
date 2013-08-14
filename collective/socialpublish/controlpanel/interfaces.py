@@ -29,5 +29,50 @@ class ISocialPublishControlPanel(Interface):
 
         )
 
+    prefix_message = schema.TextLine(
+        required=False,
+        title=_(u"Adding prefix message"),
+        default=u"",
+        )
 
+    tw_consumer_key = schema.TextLine(
+        required=False,
+        title=_(u"Twitter CONSUMER_KEY"),
+        default=u""
+        )
 
+    tw_consumer_secret = schema.TextLine(
+        required=False,
+        title=_(u"Twitter CONSUMER_SECRET"),
+        default=u""
+        )
+
+    tw_access_key = schema.TextLine(
+        required=False,
+        title=_(u"Twitter ACCESS_KEY"),
+        default=u""
+        )
+
+    tw_access_secret = schema.TextLine(
+        required=False,
+        title=_(u"Twitter ACCESS_SECRET"),
+        default=u""
+        )
+
+    fb_app_id = schema.TextLine(
+        required=False,
+        title=_(u"Facebook APP_ID"),
+        default=u""
+        )
+
+    fb_app_secret = schema.TextLine(
+        required=False,
+        title=_(u"Facebook APP_SECRET"),
+        default=u""
+        )
+
+    fb_user_id = schema.TextLine(
+        required=False,
+        title=_(u"Facebook UserID"),
+        default=u""
+        )
