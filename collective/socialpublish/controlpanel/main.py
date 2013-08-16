@@ -19,8 +19,11 @@ class SocialPublishEditForm(controlpanel.RegistryEditForm):
 
     def updateWidgets(self):
         super(SocialPublishEditForm, self).updateWidgets()
+        self.widgets['prefix_message'].addClass('long-input-text')
 
 
 class SocialPublishControlPanel(controlpanel.ControlPanelFormWrapper):
     form = SocialPublishEditForm
+
+
 
