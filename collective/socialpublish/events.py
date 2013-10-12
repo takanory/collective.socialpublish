@@ -1,10 +1,15 @@
 #
 
+import urllib
+
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from collective.socialpublish.controlpanel.interfaces import ISocialPublishControlPanel
 
 import tweepy
+from facebook import GraphAPI
+
+ENDPOINT = 'graph.facebook.com'
 
 def tw_push(tw_consumer_key, tw_consumer_secret, tw_access_key,
             tw_access_secret, message):
@@ -15,10 +20,22 @@ def tw_push(tw_consumer_key, tw_consumer_secret, tw_access_key,
 
     api.update_status(message)
 
-def _dummy_fb_pash(*args):
-    print args #TODO
-    pass
+def fb_push(fb_app_id, fb_app_secret, fb_user_id, message):
+    oauth_args = dict(client_id     = fb_app_id,
+                      client_secret = fb_app_secret,
+                      grant_type    = 'client_credentials')
+    oauth_param = urllib.urlencode(oauth_args)
+    oauth_url = 'https://' + ENDPOINT + '/oauth/access_token?' + oauth_param
+    oauth_response = urllib.urlopen(oauth_url).read()
+    _key, access_token = oauth_response.split('=')
 
+    graph = GraphAPI(access_token)
+    graph.put_wall_post(message=message)
+    #graph.put_object("me", # self wall
+    #                 "feed",
+    #                 message=message
+    #                 privacy={'value':'SELF'},
+    #                 )
 
 def social_publish(obj, event):
     registry = getUtility(IRegistry)
@@ -46,5 +63,4 @@ def social_publish(obj, event):
                tw_access_key, tw_access_secret,
                message)
     if fb_app_id and fb_app_secret and fb_user_id:
-        _dummy_fb_pash(fb_app_id, fb_app_secret, fb_user_id,
-                       message)
+        fb_push(fb_app_id, fb_app_secret, fb_user_id, message)
