@@ -35,9 +35,9 @@ class ISocialPublishControlPanel(Interface):
         default=u"",
         )
 
-    tw_consumer_key = schema.TextLine(
+    tw_consumer_token = schema.TextLine(
         required=False,
-        title=_(u"Twitter CONSUMER_KEY"),
+        title=_(u"Twitter CONSUMER_TOKEN"),
         default=u""
         )
 
@@ -47,9 +47,9 @@ class ISocialPublishControlPanel(Interface):
         default=u""
         )
 
-    tw_access_key = schema.TextLine(
+    tw_access_token = schema.TextLine(
         required=False,
-        title=_(u"Twitter ACCESS_KEY"),
+        title=_(u"Twitter ACCESS_TOKEN"),
         default=u""
         )
 
