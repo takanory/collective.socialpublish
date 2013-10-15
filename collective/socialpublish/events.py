@@ -14,7 +14,7 @@ ENDPOINT = 'graph.facebook.com'
 def tw_push(tw_consumer_token, tw_consumer_secret, tw_access_token,
             tw_access_secret, message):
     auth = tweepy.OAuthHandler(tw_consumer_token, tw_consumer_secret)
-    auth.set_access_token(tw_access_token, access_token_secret)
+    auth.set_access_token(tw_access_token, tw_access_secret)
     api = tweepy.API(auth_handler=auth, api_root='/1.1', secure=True)
 
     api.update_status(message)
