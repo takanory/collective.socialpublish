@@ -30,7 +30,6 @@ def fb_push(fb_app_id, fb_app_secret, fb_user_id, message, url):
     oauth_response = urllib.urlopen(oauth_url).read()
     _param, access_token = oauth_response.split('=')
 
-    url = 'http://plone.jp/news/ploneSeminar40'
     o = urlparse(url)
     if "." not in o.netloc:
         # localhost(e.g. http://localhost:8080) can not use link paramater
