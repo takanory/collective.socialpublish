@@ -17,6 +17,7 @@
 
     <!--<include package=".browser" />-->
     <include package=".controlpanel" />
+    <include package=".facebook_auth" />
 
     <genericsetup:registerProfile
             name="collective.socialpublish"

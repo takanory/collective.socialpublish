@@ -1,0 +1,14 @@
+<configure
+        xmlns="http://namespaces.zope.org/zope"
+        xmlns:browser="http://namespaces.zope.org/browser"
+        i18n_domain="collective.socialpublish">
+
+    <!-- Control panel -->
+    <browser:page
+            name="facebook-auth"
+            for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+            class=".auth.FacebookAuth"
+            permission="zope2.View"
+            />
+
+</configure>
