@@ -1,10 +1,13 @@
 from Acquisition import aq_inner
+from z3c.form import interfaces as z3cinterfaces
 from plone.app.registry.browser import controlpanel
 from zope.component import getMultiAdapter
 from Products.Five.browser import BrowserView
 from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
+from Products.CMFDefault.formlib.schema import ProxyFieldProperty
+
 
 from collective.socialpublish.controlpanel.interfaces import ISocialPublishControlPanel
 from collective.socialpublish import SocialPublishMessageFactory as _
@@ -22,6 +25,8 @@ class SocialPublishEditForm(controlpanel.RegistryEditForm):
     def updateWidgets(self):
         super(SocialPublishEditForm, self).updateWidgets()
         self.widgets['prefix_message'].addClass('long-input-text')
+        self.widgets['fb_access_token'].mode = z3cinterfaces.HIDDEN_MODE
+        self.widgets['fb_user_id'].mode = z3cinterfaces.DISPLAY_MODE #TODO: for test
 
     @property
     def description(self):

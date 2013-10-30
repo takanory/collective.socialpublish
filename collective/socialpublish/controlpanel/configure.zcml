@@ -11,4 +11,9 @@
             permission="cmf.ManagePortal"
             />
 
+    <utility
+        component=".vocabularies.FbPrivacyVocabularyFactory"
+        name="collective.socialpublish.fb_privacy_settings"
+    />
+
 </configure>
