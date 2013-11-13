@@ -48,6 +48,33 @@ def fb_push(fb_app_id, fb_app_secret, fb_user_id, message, url):
     graph = GraphAPI(access_token)
     graph.put_object(fb_user_id, 'feed', **data)
 
+def fb_push(fb_access_token, fb_user_id, message, url):
+    """
+    Facebook Post to Wall with access_token
+    """
+    pass
+
+def fb_page_push(fb_access_token, fb_page_id, fb_page_access_token,
+                 message, url):
+    """
+    Facebook Post to Page with access_token
+    """
+    pass
+
+def get_page_list(fb_access_token):
+    graph = GraphAPI(fb_access_token)
+    page_list = []
+
+    response = graph.get_connections('me', 'accounts')
+    for data in response['data']:
+        page_dict = {'id': data['id'],
+                     'title': data['title'],
+                     'access_token': data['access_token'],
+                     }
+        page_list.append(page_dict)
+
+    return page_list
+
 def social_publish(obj, event):
     registry = getUtility(IRegistry)
     settings = registry.forInterface(ISocialPublishControlPanel)
