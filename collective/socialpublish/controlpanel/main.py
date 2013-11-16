@@ -26,10 +26,9 @@ class SocialPublishEditForm(controlpanel.RegistryEditForm):
     def updateWidgets(self):
         super(SocialPublishEditForm, self).updateWidgets()
         self.widgets['prefix_message'].addClass('long-input-text')
-        #self.widgets['fb_access_token'].mode = z3cinterfaces.HIDDEN_MODE
-        self.widgets['fb_access_token'].mode = z3cinterfaces.DISPLAY_MODE #TODO: for test
-        self.widgets['fb_user_id'].mode = z3cinterfaces.DISPLAY_MODE #TODO: for test
-        self.widgets['fb_page_info'].mode = z3cinterfaces.DISPLAY_MODE
+        self.widgets['fb_user_id'].mode = z3cinterfaces.DISPLAY_MODE
+        self.widgets['fb_access_token'].mode = z3cinterfaces.HIDDEN_MODE
+        self.widgets['fb_page_info'].mode = z3cinterfaces.HIDDEN_MODE
 
     @property
     def description(self):
