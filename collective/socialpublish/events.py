@@ -21,45 +21,54 @@ def tw_push(tw_consumer_token, tw_consumer_secret, tw_access_token,
 
     api.update_status(message + u" " + url)
 
-def fb_push(fb_app_id, fb_app_secret, fb_user_id, message, url):
-    oauth_args = dict(client_id     = fb_app_id,
-                      client_secret = fb_app_secret,
-                      grant_type    = 'client_credentials')
-    oauth_param = urllib.urlencode(oauth_args)
-    oauth_url = 'https://' + ENDPOINT + '/oauth/access_token?' + oauth_param
-    oauth_response = urllib.urlopen(oauth_url).read()
-    _param, access_token = oauth_response.split('=')
+def fb_push(fb_access_token, fb_privacy_setting, message, url):
 
-    o = urlparse(url)
-    if "." not in o.netloc:
-        # localhost(e.g. http://localhost:8080) can not use link paramater
-        message = message + u" " + url
-        data = {
-            'message': message.encode('utf-8'),
-            'privacy': {'value':'SELF'}, # for testing
-            }
-    else:
-        data = {
-            'message': message.encode('utf-8'),
-            'link': url,
-            'privacy': {'value':'SELF'}, # for testing
-            }
-
-    graph = GraphAPI(access_token)
-    graph.put_object(fb_user_id, 'feed', **data)
-
-def fb_push(fb_access_token, fb_user_id, message, url):
     """
-    Facebook Post to Wall with access_token
+    Post to User's wall with access_token
     """
-    pass
+    graph = GraphAPI(fb_access_token)
+    post_data = create_fb_post_data(message=message,
+                                    privacy=fb_privacy_setting,
+                                    url=url)
+    graph.put_object('me', 'feed', **post_data)
 
 def fb_page_push(fb_access_token, fb_page_id, fb_page_access_token,
-                 message, url):
+                 fb_privacy_setting, message, url):
     """
-    Facebook Post to Page with access_token
+    Post to Facebook Pages with access_token
     """
-    pass
+    graph = GraphAPI(fb_access_token)
+    post_data = create_fb_post_data(message=message,
+                                    privacy=fb_privacy_setting,
+                                    url=url,
+                                    access_token=fb_page_access_token)
+    graph.put_object(fb_page_id, 'links', **post_data)
+
+def create_fb_post_data(message, privacy=None, url=None, access_token=None):
+    """
+    Create post data dictionary for Facebook wall or page
+    """
+    post_data = {}
+
+    # set privacy parameter
+    # https://developers.facebook.com/docs/reference/api/privacy-parameter/
+    if privacy:
+        post_data['privacy'] = {'value': privacy}
+
+    if url != None:
+        o = urlparse(url)
+        if "." not in o.netloc:
+            # localhost(e.g. http://localhost:8080) can not use link paramater
+            message = message + u" " + url
+        else:
+            post_data['link'] = url
+
+    # set page access_token
+    if access_token:
+        post_data['access_token'] = access_token
+
+    post_data['message'] = message.encode('utf-8'),
+    return post_data
 
 def get_page_list(fb_access_token):
     graph = GraphAPI(fb_access_token)
@@ -92,9 +101,12 @@ def social_publish(obj, event):
     tw_consumer_secret = settings.tw_consumer_secret
     tw_access_token = settings.tw_access_token
     tw_access_secret = settings.tw_access_secret
+    fb_access_token = settings.fb_access_token
     fb_app_id = settings.fb_app_id
     fb_app_secret = settings.fb_app_secret
     fb_user_id = settings.fb_user_id
+    fb_privacy_setting = settings.fb_privacy_setting
+    fb_push_select = settings.fb_push_select
 
     message = prefix_message + obj.title
     url = obj.absolute_url()
@@ -103,5 +115,10 @@ def social_publish(obj, event):
        tw_push(tw_consumer_token, tw_consumer_secret,
                tw_access_token, tw_access_secret,
                message, url)
-    if fb_app_id and fb_app_secret and fb_user_id:
-        fb_push(fb_app_id, fb_app_secret, fb_user_id, message, url)
+    if fb_push_select == 'MY_WALL':
+        # User's wall post
+        fb_push(fb_access_token, fb_user_id, fb_privacy_setting, message, url)
+    else:
+        # Page post
+        # fb_page_push(fb_access_token, fb_page_id, fb_page_access_token,
+        #              fb_privacy_setting, message, url):
