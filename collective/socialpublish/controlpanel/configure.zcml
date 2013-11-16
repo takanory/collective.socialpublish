@@ -15,5 +15,10 @@
         component=".vocabularies.FbPrivacyVocabularyFactory"
         name="collective.socialpublish.fb_privacy_settings"
     />
+    <utility
+        component=".vocabularies.FbPushSelectVocabularyFactory"
+        name="collective.socialpublish.fb_push_select"
+    />
+
 
 </configure>

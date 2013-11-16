@@ -96,3 +96,17 @@ class ISocialPublishControlPanel(Interface):
         title=_(u"Facebook access token"),
         default=u""
         )
+
+    fb_page_info = schema.Text(
+        required=False,
+        title=_(u"Facebook Page information"),
+        description=u"PageId|PageTitle|Token",
+        default= u"",
+    )
+
+    fb_push_select = schema.Choice(
+        required=False,
+        title=_(u'Facebook privacy setting'),
+        default=u"",
+        vocabulary = "collective.socialpublish.fb_push_select",
+        )

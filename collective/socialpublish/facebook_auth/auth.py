@@ -10,6 +10,8 @@ from Products.Five.browser import BrowserView
 #from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 
+from collective.socialpublish.events import get_page_list
+from collective.socialpublish.controlpanel.utils import fb_page_info_list_to_str
 
 ENDPOINT = 'graph.facebook.com'
 
@@ -44,8 +46,18 @@ class FacebookAuth(BrowserView):
         code = self.request.form.get('code')
         if code is None:
             return "NG"
-        res = get_resource('/oauth/access_token', {'client_id': fb_app_id,
+        token_res = get_resource('/oauth/access_token', {'client_id': fb_app_id,
                                                'redirect_uri': here_url,
                                                'client_secret': fb_app_secret,
                                                'code': code})
-        return res
+        fb_access_token = urlparse.parse_qs(token_res).get('access_token')
+        try:
+            settings.fb_access_token = unicode(fb_access_token[0], 'utf-8')
+        except IndexError:
+            return "Token Error"
+        
+        # TODO: GraphAPIError: Invalid OAuth access token.
+        #page_info_list = get_page_list(fb_access_token)
+        #settings.fb_page_info = fb_page_info_list_to_str(page_info_list)
+
+        return "OK" #TODO:

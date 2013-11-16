@@ -25,8 +25,10 @@ class SocialPublishEditForm(controlpanel.RegistryEditForm):
     def updateWidgets(self):
         super(SocialPublishEditForm, self).updateWidgets()
         self.widgets['prefix_message'].addClass('long-input-text')
-        self.widgets['fb_access_token'].mode = z3cinterfaces.HIDDEN_MODE
+        #self.widgets['fb_access_token'].mode = z3cinterfaces.HIDDEN_MODE
+        self.widgets['fb_access_token'].mode = z3cinterfaces.DISPLAY_MODE #TODO: for test
         self.widgets['fb_user_id'].mode = z3cinterfaces.DISPLAY_MODE #TODO: for test
+        self.widgets['fb_page_info'].mode = z3cinterfaces.DISPLAY_MODE
 
     @property
     def description(self):
@@ -39,7 +41,6 @@ class SocialPublishEditForm(controlpanel.RegistryEditForm):
         if fb_app_id and fb_app_secret:
             url = FB_OAUTH_URL + "?client_id=" + fb_app_id + "&redirect_uri=" +\
                     here_url + "&scope=publish_stream"
-            print url
             return _(u'''If you did NOT get facebook auth,
                 you need to click the link: <a href="%s">Facebook Auth</a>''' % (url,))
         else:
