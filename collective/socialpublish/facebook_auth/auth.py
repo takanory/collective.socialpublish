@@ -52,12 +52,13 @@ class FacebookAuth(BrowserView):
                                                'code': code})
         fb_access_token = urlparse.parse_qs(token_res).get('access_token')
         try:
-            settings.fb_access_token = unicode(fb_access_token[0], 'utf-8')
+            fb_access_token_unicode = unicode(fb_access_token[0], 'utf-8')
         except IndexError:
             return "Token Error"
-        
-        # TODO: GraphAPIError: Invalid OAuth access token.
-        #page_info_list = get_page_list(fb_access_token)
-        #settings.fb_page_info = fb_page_info_list_to_str(page_info_list)
+        settings.fb_access_token = fb_access_token_unicode
+
+        page_info_list = get_page_list(fb_access_token_unicode)
+        #print page_info_list
+        settings.fb_page_info = fb_page_info_list_to_str(page_info_list)
 
         return "OK" #TODO:

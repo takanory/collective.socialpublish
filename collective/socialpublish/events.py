@@ -10,6 +10,8 @@ from collective.socialpublish.controlpanel.interfaces import ISocialPublishContr
 import tweepy
 from facebook import GraphAPI
 
+from collective.socialpublish.controlpanel.utils import get_fb_page_token
+
 # Endpointo of Facebook Graph API
 ENDPOINT = 'graph.facebook.com'
 
@@ -117,8 +119,11 @@ def social_publish(obj, event):
                message, url)
     if fb_push_select == 'MY_WALL':
         # User's wall post
-        fb_push(fb_access_token, fb_user_id, fb_privacy_setting, message, url)
+        fb_push(fb_access_token, fb_privacy_setting, message, url)
     else:
+        #fb_page_info = settings.fb_page_info
+        fb_page_id = fb_push_select
+        fb_page_access_token = get_fb_page_token(settings, fb_push_select)
         # Page post
-        # fb_page_push(fb_access_token, fb_page_id, fb_page_access_token,
-        #              fb_privacy_setting, message, url):
+        fb_page_push(fb_access_token, fb_page_id, fb_page_access_token,
+                     fb_privacy_setting, message, url)
