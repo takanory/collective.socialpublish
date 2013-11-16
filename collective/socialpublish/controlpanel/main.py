@@ -13,6 +13,7 @@ from collective.socialpublish.controlpanel.interfaces import ISocialPublishContr
 from collective.socialpublish import SocialPublishMessageFactory as _
 
 FB_OAUTH_URL =  " https://graph.facebook.com/oauth/authorize"
+SCOPE = "publish_stream,offline_access,manage_pages"
 
 class SocialPublishEditForm(controlpanel.RegistryEditForm):
 
@@ -40,7 +41,7 @@ class SocialPublishEditForm(controlpanel.RegistryEditForm):
         fb_app_secret = settings.fb_app_secret
         if fb_app_id and fb_app_secret:
             url = FB_OAUTH_URL + "?client_id=" + fb_app_id + "&redirect_uri=" +\
-                    here_url + "&scope=publish_stream"
+                    here_url + "&scope=" + SCOPE
             return _(u'''If you did NOT get facebook auth,
                 you need to click the link: <a href="%s">Facebook Auth</a>''' % (url,))
         else:
