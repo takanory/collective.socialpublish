@@ -68,7 +68,7 @@ def get_page_list(fb_access_token):
     response = graph.get_connections('me', 'accounts')
     for data in response['data']:
         page_dict = {'id': data['id'],
-                     'title': data['title'],
+                     'name': data['name'],
                      'access_token': data['access_token'],
                      }
         page_list.append(page_dict)
