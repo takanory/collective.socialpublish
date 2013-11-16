@@ -9,6 +9,7 @@ from collective.socialpublish.controlpanel.interfaces import ISocialPublishContr
 from Products.Five.browser import BrowserView
 #from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
+from Products.statusmessages.interfaces import IStatusMessage
 
 from collective.socialpublish.events import get_page_list
 from collective.socialpublish.controlpanel.utils import fb_page_info_list_to_str
@@ -36,6 +37,7 @@ class FacebookAuth(BrowserView):
     #template = ViewPageTemplateFile('')
 
     def __call__(self):
+        portal_messages = IStatusMessage(self.request)
         portal_url = getToolByName(self.context, 'portal_url')()
         here_url = portal_url + "/@@facebook-auth"
         registry = getUtility(IRegistry)
@@ -45,7 +47,8 @@ class FacebookAuth(BrowserView):
 
         code = self.request.form.get('code')
         if code is None:
-            return "NG"
+            portal_messages.add(u"Illegal access because nothing 'code'", type=u"error")
+            return self.request.RESPONSE.redirect("@@socialpublish-settings")
         token_res = get_resource('/oauth/access_token', {'client_id': fb_app_id,
                                                'redirect_uri': here_url,
                                                'client_secret': fb_app_secret,
@@ -54,11 +57,13 @@ class FacebookAuth(BrowserView):
         try:
             fb_access_token_unicode = unicode(fb_access_token[0], 'utf-8')
         except IndexError:
-            return "Token Error"
+            portal_messages.add(u"Couldn't get Facebook token", type=u"error")
+            return self.request.RESPONSE.redirect("@@socialpublish-settings")
         settings.fb_access_token = fb_access_token_unicode
 
         page_info_list = get_page_list(fb_access_token_unicode)
-        #print page_info_list
         settings.fb_page_info = fb_page_info_list_to_str(page_info_list)
 
-        return "OK" #TODO:
+        portal_messages.add(u"Getting Facebook page information", type=u"info")
+        return self.request.RESPONSE.redirect("@@socialpublish-settings")
+
