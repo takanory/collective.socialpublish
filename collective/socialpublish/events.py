@@ -88,7 +88,10 @@ def get_page_list(fb_access_token):
 
 def social_publish(obj, event):
     registry = getUtility(IRegistry)
-    settings = registry.forInterface(ISocialPublishControlPanel)
+    try:
+        settings = registry.forInterface(ISocialPublishControlPanel)
+    except KeyError:
+        return None
     content_types = settings.content_types
     workflow_transitions = settings.workflow_transitions
     if obj.portal_type not in content_types:
