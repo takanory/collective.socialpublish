@@ -46,6 +46,8 @@ class FbPushSelectVocabulary(object):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISocialPublishControlPanel)
         fb_page_info = settings.fb_page_info
+        if fb_page_info is None:
+            return []
         dic = fb_page_info_str_to_dict(fb_page_info)
         for key, value in dic.items():
             items.append((key, key, value['title']))
