@@ -69,7 +69,7 @@ def create_fb_post_data(message, privacy=None, url=None, access_token=None):
     if access_token:
         post_data['access_token'] = access_token
 
-    post_data['message'] = message.encode('utf-8'),
+    post_data['message'] = message.encode('utf-8')
     return post_data
 
 def get_page_list(fb_access_token):
