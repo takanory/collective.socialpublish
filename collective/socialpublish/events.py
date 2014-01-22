@@ -41,10 +41,12 @@ def fb_page_push(fb_access_token, fb_page_id, fb_page_access_token,
     """
     graph = GraphAPI(fb_access_token)
     post_data = create_fb_post_data(message=message,
-                                    privacy=fb_privacy_setting,
                                     url=url,
                                     access_token=fb_page_access_token)
-    graph.put_object(fb_page_id, 'links', **post_data)
+    if post_data.has_key('link'):
+        graph.put_object(fb_page_id, 'links', **post_data)
+    else:
+        graph.put_object(fb_page_id, 'feed', **post_data)
 
 def create_fb_post_data(message, privacy=None, url=None, access_token=None):
     """
