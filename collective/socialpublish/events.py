@@ -113,7 +113,10 @@ def social_publish(obj, event):
     fb_privacy_setting = settings.fb_privacy_setting
     fb_push_select = settings.fb_push_select
 
-    message = prefix_message + obj.title
+    if prefix_message is None:
+        message = obj.title
+    else:
+        message = prefix_message + obj.title
     url = obj.absolute_url()
     if tw_consumer_token and tw_consumer_secret and \
             tw_access_token and tw_access_secret:
