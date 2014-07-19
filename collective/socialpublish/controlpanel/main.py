@@ -13,7 +13,7 @@ from collective.socialpublish.controlpanel.interfaces import ISocialPublishContr
 from collective.socialpublish import SocialPublishMessageFactory as _
 
 FB_OAUTH_URL =  " https://graph.facebook.com/oauth/authorize"
-SCOPE = "publish_stream,offline_access,manage_pages"
+SCOPE = "publish_actions,offline_access,manage_pages"
 
 class SocialPublishEditForm(controlpanel.RegistryEditForm):
 
@@ -26,9 +26,11 @@ class SocialPublishEditForm(controlpanel.RegistryEditForm):
     def updateWidgets(self):
         super(SocialPublishEditForm, self).updateWidgets()
         self.widgets['prefix_message'].addClass('long-input-text')
-        self.widgets['fb_user_id'].mode = z3cinterfaces.DISPLAY_MODE
+        # self.widgets['fb_user_id'].mode = z3cinterfaces.DISPLAY_MODE
         self.widgets['fb_access_token'].mode = z3cinterfaces.HIDDEN_MODE
         self.widgets['fb_page_info'].mode = z3cinterfaces.HIDDEN_MODE
+        # self.widgets['fb_access_token'].mode = z3cinterfaces.DISPLAY_MODE
+        # self.widgets['fb_page_info'].mode = z3cinterfaces.DISPLAY_MODE
 
     @property
     def description(self):

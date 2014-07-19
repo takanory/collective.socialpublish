@@ -78,11 +78,11 @@ class ISocialPublishControlPanel(Interface):
         default=u""
         )
 
-    fb_user_id = schema.TextLine(
-        required=False,
-        title=_(u"Facebook UserID"),
-        default=u""
-        )
+    # fb_user_id = schema.TextLine(
+    #     required=False,
+    #     title=_(u"Facebook UserID"),
+    #     default=u""
+    #     )
 
     fb_privacy_setting = schema.Choice(
         required=False,

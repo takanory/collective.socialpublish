@@ -109,9 +109,9 @@ def social_publish(obj, event):
     tw_access_token = settings.tw_access_token
     tw_access_secret = settings.tw_access_secret
     fb_access_token = settings.fb_access_token
-    fb_app_id = settings.fb_app_id
-    fb_app_secret = settings.fb_app_secret
-    fb_user_id = settings.fb_user_id
+    # fb_app_id = settings.fb_app_id
+    # fb_app_secret = settings.fb_app_secret
+    # fb_user_id = settings.fb_user_id
     fb_privacy_setting = settings.fb_privacy_setting
     fb_push_select = settings.fb_push_select
 
@@ -125,13 +125,14 @@ def social_publish(obj, event):
        tw_push(tw_consumer_token, tw_consumer_secret,
                tw_access_token, tw_access_secret,
                message, url)
-    if fb_push_select == 'MY_WALL':
-        # User's wall post
-        fb_push(fb_access_token, fb_privacy_setting, message, url)
-    else:
-        #fb_page_info = settings.fb_page_info
-        fb_page_id = fb_push_select
-        fb_page_access_token = get_fb_page_token(settings, fb_push_select)
-        # Page post
-        fb_page_push(fb_access_token, fb_page_id, fb_page_access_token,
-                     fb_privacy_setting, message, url)
+    if fb_access_token:
+        if fb_push_select == 'MY_WALL':
+            # User's wall post
+            fb_push(fb_access_token, fb_privacy_setting, message, url)
+        else:
+            #fb_page_info = settings.fb_page_info
+            fb_page_id = fb_push_select
+            fb_page_access_token = get_fb_page_token(settings, fb_push_select)
+            # Page post
+            fb_page_push(fb_access_token, fb_page_id, fb_page_access_token,
+                         fb_privacy_setting, message, url)
