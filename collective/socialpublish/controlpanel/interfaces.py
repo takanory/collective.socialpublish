@@ -110,3 +110,9 @@ class ISocialPublishControlPanel(Interface):
         default=u"",
         vocabulary = "collective.socialpublish.fb_push_select",
         )
+
+    url_for_publish = schema.TextLine(
+        required=False,
+        title=_(u"Publish URL"),
+        description=u"If you use edit URL, not same Publish URL. e.g.) http://www.cmscom.jp",
+    )
